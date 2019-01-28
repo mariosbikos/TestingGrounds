@@ -41,15 +41,22 @@ public:
 
 	/** AnimMontage to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		class UAnimMontage* FireAnimation;
+	class UAnimMontage* FireAnimation3P;
+
+	/** AnimMontage to play each time we fire */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	class UAnimMontage* FireAnimation1P;
 
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class ABallProjectile> ProjectileClass;
 
 	/** Projectile class to spawn */
-	UPROPERTY(EditDefaultsOnly, Category = Gameplay)
-	class UAnimInstance* AnimInstance;
+	UPROPERTY()
+	class UAnimInstance* AnimInstance1P;
+	/** Projectile class to spawn */
+	UPROPERTY()
+	class UAnimInstance* AnimInstance3P;
 
 	/** Fires a projectile. */
 	UFUNCTION(BlueprintCallable,Category = "Gameplay")
