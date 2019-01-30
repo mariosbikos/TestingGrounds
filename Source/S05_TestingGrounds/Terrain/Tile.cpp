@@ -25,7 +25,12 @@ void ATile::BeginPlay()
 void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-	Pool->Return(NavMeshBoundsVolume);
+
+	if (Pool && NavMeshBoundsVolume)
+	{
+		Pool->Return(NavMeshBoundsVolume);
+	}
+	
 	
 }
 
@@ -139,6 +144,10 @@ template<class T>
 void ATile::PlaceActor(TSubclassOf<T> ToSpawn, FSpawnPosition SpawnPosition)
 {
 	AActor* Spawned = GetWorld()->SpawnActor(ToSpawn);
+	if (!Spawned)
+	{
+		return;
+	}
 	Spawned->SetActorRelativeLocation(SpawnPosition.Location);
 
 	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
@@ -151,6 +160,10 @@ template<>
 void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition)
 {
 	AActor* Spawned = GetWorld()->SpawnActor(ToSpawn);
+	if (!Spawned)
+	{
+		return;
+	}
 	Spawned->SetActorRelativeLocation(SpawnPosition.Location);
 	
 	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
@@ -164,6 +177,10 @@ template<>
 void ATile::PlaceActor(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPosition)
 {
 	APawn* Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn);
+	if (!Spawned)
+	{
+		return;
+	}
 	Spawned->SetActorRelativeLocation(SpawnPosition.Location);
 
 	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
